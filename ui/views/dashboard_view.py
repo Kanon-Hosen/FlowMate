@@ -6,12 +6,13 @@ if str(root_dir) not in sys.path:
     sys.path.insert(0, str(root_dir))
 
 from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QSpinBox,
+    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QSpinBox, QLineEdit,
     QComboBox, QFrame, QTableWidget, QTableWidgetItem, QHeaderView, QMessageBox
 )
 from PySide6.QtCore import Signal, Qt
 from core.app_state import AppState
 from core.project_manager import Project
+from core.naming_engine import render_filename_template
 from ui.widgets.stat_card import StatCard
 from ui.widgets.custom_controls import PathPickerRow, StatusBadge
 
@@ -148,6 +149,33 @@ class DashboardView(QWidget):
         action_btns_layout.addLayout(btns_row)
         counter_row.addLayout(action_btns_layout)
 
+        # Dynamic Naming Template Row
+        template_row = QVBoxLayout()
+        template_label_box = QHBoxLayout()
+        template_title = QLabel("Naming Pattern Template:")
+        template_title.setStyleSheet("font-weight: 700; color: #818CF8;")
+        
+        self.template_preview_label = QLabel("Preview: 001.mp4")
+        self.template_preview_label.setStyleSheet("font-weight: 700; color: #34D399; font-size: 12px;")
+        
+        template_label_box.addWidget(template_title)
+        template_label_box.addStretch()
+        template_label_box.addWidget(self.template_preview_label)
+
+        self.template_input = QLineEdit()
+        self.template_input.setPlaceholderText("e.g. {project}_{date}_{counter}")
+        self.template_input.textChanged.connect(self._on_template_changed)
+
+        template_hint = QLabel("Available Tokens: {counter}, {project}, {date}, {time}, {original}, {ext}")
+        template_hint.setStyleSheet("font-size: 11px; color: #64748B;")
+
+        template_row.addLayout(template_label_box)
+        template_row.addWidget(self.template_input)
+        template_row.addWidget(template_hint)
+
+        config_layout.addLayout(template_row)
+        config_layout.addSpacing(10)
+
         config_layout.addLayout(counter_row)
         main_layout.addWidget(config_card)
 
@@ -190,6 +218,11 @@ class DashboardView(QWidget):
         index = self.digits_combo.findData(project.padding_digits)
         if index >= 0:
             self.digits_combo.setCurrentIndex(index)
+
+        self.template_input.blockSignals(True)
+        self.template_input.setText(getattr(project, "name_template", "{counter}"))
+        self.template_input.blockSignals(False)
+        self._update_template_preview()
 
         formatted_val = f"{project.current_counter:0{project.padding_digits}d}"
         self.card_counter.set_value(formatted_val)
@@ -277,3 +310,23 @@ class DashboardView(QWidget):
         )
         if reply == QMessageBox.StandardButton.Yes:
             self.reset_counter_requested.emit()
+
+    def _on_template_changed(self, text: str):
+        proj = self.app_state.active_project
+        if proj is not None:
+            proj.name_template = text
+            self._update_template_preview()
+            self.save_project_requested.emit()
+
+    def _update_template_preview(self):
+        proj = self.app_state.active_project
+        if proj is not None:
+            sample = render_filename_template(
+                template=proj.name_template,
+                counter=proj.current_counter,
+                padding_digits=proj.padding_digits,
+                project_name=proj.name,
+                original_filename="sample_video.mp4",
+                extension=".mp4"
+            )
+            self.template_preview_label.setText(f"Preview: {sample}")

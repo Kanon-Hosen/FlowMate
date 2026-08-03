@@ -83,6 +83,11 @@ class SettingsView(QWidget):
         self.tray_cb.toggled.connect(lambda v: self.app_state.settings_manager.set("minimize_to_tray", v))
         form_layout.addRow("System Tray:", self.tray_cb)
 
+        # OS Boot Startup
+        self.os_startup_cb = QCheckBox("Launch FlowMate automatically on OS system startup")
+        self.os_startup_cb.toggled.connect(self._on_os_startup_toggled)
+        form_layout.addRow("OS Autostart:", self.os_startup_cb)
+
         card_layout.addLayout(form_layout)
         main_layout.addWidget(card)
 
@@ -99,9 +104,39 @@ class SettingsView(QWidget):
         self.autostart_cb.setChecked(settings.get("auto_start_watcher", False))
         self.notify_cb.setChecked(settings.get("enable_desktop_notifications", True))
         self.tray_cb.setChecked(settings.get("minimize_to_tray", True))
+        self.os_startup_cb.setChecked(settings.get("launch_on_boot", False))
 
     def _on_theme_changed(self, index: int):
         theme_key = self.theme_combo.itemData(index)
         if theme_key:
             self.app_state.settings_manager.set("theme", theme_key)
             self.theme_changed.emit(theme_key)
+
+    def _on_os_startup_toggled(self, enabled: bool):
+        self.app_state.settings_manager.set("launch_on_boot", enabled)
+        autostart_dir = Path.home() / ".config" / "autostart"
+        autostart_file = autostart_dir / "FlowMate.desktop"
+
+        if enabled:
+            try:
+                autostart_dir.mkdir(parents=True, exist_ok=True)
+                main_path = Path(__file__).resolve().parent.parent.parent / "main.py"
+                desktop_content = f"""[Desktop Entry]
+Type=Application
+Name=FlowMate
+Comment=Automated File Watcher & Renamer
+Exec=python3 {main_path}
+Icon=utilities-terminal
+Terminal=false
+Categories=Utility;
+X-GNOME-Autostart-enabled=true
+"""
+                autostart_file.write_text(desktop_content, encoding="utf-8")
+            except Exception:
+                pass
+        else:
+            try:
+                if autostart_file.exists():
+                    autostart_file.unlink()
+            except Exception:
+                pass

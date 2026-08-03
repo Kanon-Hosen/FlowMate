@@ -12,6 +12,7 @@ if str(root_dir) not in sys.path:
 from typing import Optional, Dict, Any
 from core.logger import logger, log_activity
 from core.project_manager import Project, ProjectManager
+from core.naming_engine import render_filename_template
 
 IGNORED_EXTENSIONS = {".crdownload", ".tmp", ".part", ".download"}
 
@@ -86,6 +87,13 @@ class FileRenamer:
             logger.warning(f"File '{src_path.name}' is locked or incomplete. Skipping.")
             return None
 
+        # 3.5 Check Minimum File Size Filter
+        if getattr(project, "min_file_size_mb", 0.0) > 0.0:
+            file_size_mb = src_path.stat().st_size / (1024 * 1024)
+            if file_size_mb < project.min_file_size_mb:
+                logger.info(f"Skipping '{src_path.name}' ({file_size_mb:.2f} MB) - smaller than minimum threshold ({project.min_file_size_mb} MB)")
+                return None
+
         # 4. Prepare Destination Folder
         expanded_dest = os.path.expanduser(project.output_dir)
         dest_dir = Path(expanded_dest)
@@ -97,19 +105,34 @@ class FileRenamer:
             log_activity(err_msg, level="ERROR", original_file=src_path.name, project_name=project.name)
             return None
 
-        # 5. Generate unique sequential filename
+        # 5. Generate unique dynamic filename from template
         ext = src_path.suffix
         counter = project.current_counter
         padding = project.padding_digits
+        template = getattr(project, "name_template", "{counter}")
 
-        formatted_name = f"{counter:0{padding}d}{ext}"
+        formatted_name = render_filename_template(
+            template=template,
+            counter=counter,
+            padding_digits=padding,
+            project_name=project.name,
+            original_filename=src_path.name,
+            extension=ext
+        )
         dest_path = dest_dir / formatted_name
 
         # Prevent overwrite by advancing counter if target already exists
         while dest_path.exists():
             logger.info(f"Target file {dest_path.name} already exists. Advancing counter from {counter} to {counter + 1}")
             counter += 1
-            formatted_name = f"{counter:0{padding}d}{ext}"
+            formatted_name = render_filename_template(
+                template=template,
+                counter=counter,
+                padding_digits=padding,
+                project_name=project.name,
+                original_filename=src_path.name,
+                extension=ext
+            )
             dest_path = dest_dir / formatted_name
 
         # 6. Execute File Transfer (Move)

@@ -80,8 +80,9 @@ class Sidebar(QFrame):
         nav_items = [
             (" Dashboard", 0),
             (" Projects", 1),
-            (" Logs & Activity", 2),
-            (" Settings", 3)
+            (" Batch Lab", 2),
+            (" Logs & Activity", 3),
+            (" Settings", 4)
         ]
 
         self.buttons = []
@@ -99,7 +100,7 @@ class Sidebar(QFrame):
         layout.addStretch()
 
         # Footer
-        footer_label = QLabel("FlowMate v1.0.0 Pro")
+        footer_label = QLabel("FlowMate v2.0.0 Pro")
         footer_label.setStyleSheet("color: #475569; font-size: 11px; text-align: center;")
         footer_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(footer_label)

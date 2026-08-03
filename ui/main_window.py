@@ -21,6 +21,7 @@ from ui.styles import DARK_THEME, LIGHT_THEME
 from ui.widgets.sidebar import Sidebar
 from ui.views.dashboard_view import DashboardView
 from ui.views.projects_view import ProjectsView
+from ui.views.batch_view import BatchView
 from ui.views.logs_view import LogsView
 from ui.views.settings_view import SettingsView
 
@@ -72,11 +73,13 @@ class MainWindow(QMainWindow):
         
         self.dashboard_view = DashboardView(self.app_state)
         self.projects_view = ProjectsView(self.app_state)
+        self.batch_view = BatchView(self.app_state)
         self.logs_view = LogsView()
         self.settings_view = SettingsView(self.app_state)
 
         self.stacked_widget.addWidget(self.dashboard_view)
         self.stacked_widget.addWidget(self.projects_view)
+        self.stacked_widget.addWidget(self.batch_view)
         self.stacked_widget.addWidget(self.logs_view)
         self.stacked_widget.addWidget(self.settings_view)
 

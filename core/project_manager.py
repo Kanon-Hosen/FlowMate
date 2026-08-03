@@ -28,6 +28,8 @@ class Project:
         padding_digits: int = 3,
         file_extensions: Optional[List[str]] = None,
         description: str = "",
+        name_template: str = "{counter}",
+        min_file_size_mb: float = 0.0,
         files_today: int = 0,
         files_total: int = 0,
         last_active_date: Optional[str] = None,
@@ -41,6 +43,8 @@ class Project:
         self.current_counter = current_counter
         self.padding_digits = padding_digits
         self.file_extensions = file_extensions or [".mp4", ".webm", ".mkv", ".mov", ".avi"]
+        self.name_template = name_template
+        self.min_file_size_mb = min_file_size_mb
         self.files_today = files_today
         self.files_total = files_total
         self.last_active_date = last_active_date or datetime.now().strftime("%Y-%m-%d")
@@ -56,6 +60,8 @@ class Project:
             "current_counter": self.current_counter,
             "padding_digits": self.padding_digits,
             "file_extensions": self.file_extensions,
+            "name_template": self.name_template,
+            "min_file_size_mb": self.min_file_size_mb,
             "files_today": self.files_today,
             "files_total": self.files_total,
             "last_active_date": self.last_active_date,
@@ -73,6 +79,8 @@ class Project:
             padding_digits=data.get("padding_digits", 3),
             file_extensions=data.get("file_extensions", [".mp4", ".webm", ".mkv", ".mov", ".avi"]),
             description=data.get("description", ""),
+            name_template=data.get("name_template", "{counter}"),
+            min_file_size_mb=data.get("min_file_size_mb", 0.0),
             files_today=data.get("files_today", 0),
             files_total=data.get("files_total", 0),
             last_active_date=data.get("last_active_date", None),
@@ -135,7 +143,7 @@ class ProjectManager:
             logger.error(f"Failed to save project {project.id}: {e}")
             return False
 
-    def create_project(self, name: str, watch_dir: str, output_dir: str, padding_digits: int = 3, start_counter: int = 1, description: str = "") -> Project:
+    def create_project(self, name: str, watch_dir: str, output_dir: str, padding_digits: int = 3, start_counter: int = 1, description: str = "", name_template: str = "{counter}", min_file_size_mb: float = 0.0) -> Project:
         """Creates and saves a new project."""
         project_id = re.sub(r'[^a-z0-9_-]', '_', name.lower().strip()) or f"proj_{int(datetime.now().timestamp())}"
         
@@ -152,7 +160,9 @@ class ProjectManager:
             output_dir=output_dir,
             current_counter=start_counter,
             padding_digits=padding_digits,
-            description=description
+            description=description,
+            name_template=name_template,
+            min_file_size_mb=min_file_size_mb
         )
 
         self.detect_and_update_counter(new_proj)
