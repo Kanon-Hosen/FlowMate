@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flowmate"
+version = "1.0.0"
+description = "FlowMate - Automated File Watcher & Renamer"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "PySide6>=6.5.0",
+    "watchdog>=3.0.0"
+]
+
+[tool.pyright]
+include = ["."]
+extraPaths = [
+    ".",
+    ".venv/lib/python3.12/site-packages",
+    "/home/kanon/.local/lib/python3.12/site-packages"
+]
+executionEnvironments = [
+  { root = "." }
+]

@@ -1,0 +1,9 @@
+{
+  "active_project_id": "default",
+  "theme": "dark",
+  "auto_start_watcher": false,
+  "enable_desktop_notifications": true,
+  "minimize_to_tray": true,
+  "window_width": 1200,
+  "window_height": 800
+}

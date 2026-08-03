@@ -1,0 +1,18 @@
+{
+  "watch_directory": "",
+  "destination_directory": "",
+  "theme": "dark",
+  "auto_start": false,
+  "rules": [
+    {
+      "id": "rule-1",
+      "name": "Lowercase & Replace Spaces",
+      "enabled": true,
+      "extension_filter": "",
+      "prefix": "",
+      "suffix": "",
+      "replace_spaces_with": "_",
+      "case_transform": "lowercase"
+    }
+  ]
+}
