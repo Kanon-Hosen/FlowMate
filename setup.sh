@@ -17,9 +17,10 @@ echo "Installing requirements..."
 ./.venv/bin/pip install --upgrade pip
 ./.venv/bin/pip install -r requirements.txt
 
-# 4. Create desktop shortcut launcher
-echo "Creating desktop shortcut..."
+# 4. Create desktop shortcut & system application menu launcher
+echo "Creating desktop shortcut and app menu entry..."
 DESKTOP_FILE="$HOME/Desktop/ClipPilot.desktop"
+SYSTEM_APP_FILE="$HOME/.local/share/applications/ClipPilot.desktop"
 APP_DIR=$(pwd)
 
 cat <<EOF > "$DESKTOP_FILE"
@@ -40,6 +41,11 @@ EOF
 chmod +x "$DESKTOP_FILE"
 gio trust "$DESKTOP_FILE" 2>/dev/null || true
 
+mkdir -p "$HOME/.local/share/applications"
+cp "$DESKTOP_FILE" "$SYSTEM_APP_FILE"
+chmod +x "$SYSTEM_APP_FILE"
+update-desktop-database "$HOME/.local/share/applications" 2>/dev/null || true
+
 echo "✅ Setup complete! You can now run ClipPilot using:"
 echo "   python3 main.py"
-echo "or double-click the ClipPilot icon on your desktop!"
+echo "or click the ClipPilot icon in your applications menu!"
