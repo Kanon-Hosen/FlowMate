@@ -5,14 +5,14 @@ from ui.main_window import MainWindow
 from core.logger import logger
 
 def main():
-    logger.info("Initializing FlowMate desktop application...")
+    logger.info("Initializing ClipPilot desktop application...")
     
     # Enable Ctrl+C SIGINT handling
     signal.signal(signal.SIGINT, signal.SIG_DFL)
 
     app = QApplication(sys.argv)
-    app.setApplicationName("FlowMate")
-    app.setOrganizationName("FlowMate")
+    app.setApplicationName("ClipPilot")
+    app.setOrganizationName("ClipPilot")
 
     window = MainWindow()
     window.show()

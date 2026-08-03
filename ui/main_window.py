@@ -36,7 +36,7 @@ class MainWindow(QMainWindow):
         self.app_state = AppState()
         self.watcher_thread = None
 
-        self.setWindowTitle("FlowMate - Automated File Watcher & Renamer")
+        self.setWindowTitle("ClipPilot - Automated Video & File Pilot")
         
         # Load Window Dimensions
         width = self.app_state.settings_manager.get("window_width", 1200)

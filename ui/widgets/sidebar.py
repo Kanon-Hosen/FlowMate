@@ -41,11 +41,11 @@ class Sidebar(QFrame):
 
         title_box = QVBoxLayout()
         title_box.setSpacing(2)
-        app_name = QLabel("FlowMate")
+        app_name = QLabel("ClipPilot")
         app_name.setFont(QFont("Ubuntu", 17, QFont.Weight.Bold))
         app_name.setStyleSheet("color: #F8FAFC; letter-spacing: -0.5px;")
 
-        app_subtitle = QLabel("Auto Renamer")
+        app_subtitle = QLabel("Media Pilot")
         app_subtitle.setStyleSheet("color: #64748B; font-size: 11px;")
 
         title_box.addWidget(app_name)

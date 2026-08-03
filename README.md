@@ -1,8 +1,8 @@
 <div align="center">
 
-# ⚡ FlowMate v2.0 Pro
+# ✈️ ClipPilot v2.0 Pro
 
-### *Automated Sequential Video Renamer & File Management Engine*
+### *Automated Sequential Video & File Management Pilot*
 
 [![Version 2.0.0](https://img.shields.io/badge/Version-v2.0.0%20Pro-6366F1?style=for-the-badge&logo=rocket&logoColor=white)](https://github.com/Kanon-Hosen/FlowMate)
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
@@ -10,7 +10,7 @@
 [![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-0078D6?style=for-the-badge&logo=apple&logoColor=white)](#-installation)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
-*FlowMate v2.0 Pro automatically detects completed browser downloads (Google Chrome, Edge, Firefox), parses dynamic naming templates, renames files sequentially (e.g. `Shorts_2026-08-04_001.mp4`), and offers a Drag-and-Drop Batch Lab for offline media libraries.*
+*ClipPilot v2.0 Pro automatically detects completed browser downloads (Google Chrome, Edge, Firefox), parses dynamic naming templates, renames files sequentially (e.g. `Shorts_2026-08-04_001.mp4`), and offers a Drag-and-Drop Batch Lab for offline media libraries.*
 
 [Key Features](#-key-features) •
 [Dynamic Templates](#-dynamic-naming-templates) •
@@ -27,7 +27,7 @@
 
 When producing video content, downloading multiple video clips manually one-by-one from web tools or Google Chrome often leads to messy download folders filled with unorganized default filenames (e.g. `download (1).mp4`, `videoplayback.mp4`).
 
-**FlowMate v2.0 Pro** solves this workflow bottleneck. Operating silently in the background, FlowMate monitors your browser download directory, waits for file write completion to ensure zero data corruption, parses custom naming patterns, automatically renames the files in numeric sequence (`001.mp4`, `Shorts_2026-08-04_001.mp4`...), and instantly relocates them into designated output project folders.
+**ClipPilot v2.0 Pro** solves this workflow bottleneck. Operating silently in the background, ClipPilot monitors your browser download directory, waits for file write completion to ensure zero data corruption, parses custom naming patterns, automatically renames the files in numeric sequence (`001.mp4`, `Shorts_2026-08-04_001.mp4`...), and instantly relocates them into designated output project folders.
 
 ---
 
@@ -38,7 +38,7 @@ When producing video content, downloading multiple video clips manually one-by-o
 - **⚡ Real-time Directory Monitoring**: Powered by native OS file system events (`watchdog`) to instantly detect new downloads without high CPU polling.
 - **🛡️ Thread-Safe & Atomic File Locking**: Includes multi-stage size stabilization and OS file handle verification to prevent race conditions during large file downloads.
 - **🔢 Minimum File Size Filtering**: Skip incomplete, tiny, or junk thumbnail files below a specified MB threshold.
-- **⚙️ OS Autostart Integration**: Easily configure FlowMate to launch automatically on Linux or Windows system boot.
+- **⚙️ OS Autostart Integration**: Easily configure ClipPilot to launch automatically on Linux or Windows system boot.
 - **🔔 System Tray Integration**: Minimizes to Linux / Windows system tray for uninterrupted background operation with desktop notifications.
 - **🎨 Modern Dark Theme UX**: Fluent-inspired dark UI with custom typography (`Ubuntu` / `Inter`), glassmorphism card widgets, and glowing status badges.
 
@@ -46,7 +46,7 @@ When producing video content, downloading multiple video clips manually one-by-o
 
 ## 🏷️ Dynamic Naming Templates
 
-FlowMate v2.0 Pro allows you to define flexible filename formatting patterns per project:
+ClipPilot v2.0 Pro allows you to define flexible filename formatting patterns per project:
 
 | Token | Description | Example Output |
 | :--- | :--- | :--- |
@@ -78,8 +78,8 @@ Got existing folders of unorganized video clips?
 
 #### 1. Clone the Repository
 ```bash
-git clone https://github.com/Kanon-Hosen/FlowMate.git
-cd FlowMate
+git clone https://github.com/Kanon-Hosen/FlowMate.git ClipPilot
+cd ClipPilot
 ```
 
 #### 2. Run Automated Setup
@@ -88,11 +88,11 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-#### 3. Launch FlowMate
+#### 3. Launch ClipPilot
 ```bash
 python3 main.py
 ```
-*(Or double-click the **FlowMate** desktop shortcut created by `setup.sh` on your desktop!)*
+*(Or double-click the **ClipPilot** desktop shortcut created by `setup.sh` on your desktop!)*
 
 ---
 
@@ -100,15 +100,15 @@ python3 main.py
 
 #### Option A: Run via Python
 ```cmd
-git clone https://github.com/Kanon-Hosen/FlowMate.git
-cd FlowMate
+git clone https://github.com/Kanon-Hosen/FlowMate.git ClipPilot
+cd ClipPilot
 pip install -r requirements.txt
 python main.py
 ```
 
 #### Option B: Build Standalone `.exe` (No Python Required)
 1. Double-click `build_windows.bat` in the project root.
-2. Your standalone executable will be generated at `dist/FlowMate.exe`.
+2. Your standalone executable will be generated at `dist/ClipPilot.exe`.
 
 ---
 
@@ -116,24 +116,24 @@ python main.py
 
 #### Option A: Run via Python
 ```bash
-git clone https://github.com/Kanon-Hosen/FlowMate.git
-cd FlowMate
+git clone https://github.com/Kanon-Hosen/FlowMate.git ClipPilot
+cd ClipPilot
 pip3 install -r requirements.txt
 python3 main.py
 ```
 
-#### Option B: Build Standalone `FlowMate.app`
+#### Option B: Build Standalone `ClipPilot.app`
 1. Run `./build_mac.sh` in the terminal.
-2. Double-click `dist/FlowMate.app` to launch!
+2. Double-click `dist/ClipPilot.app` to launch!
 
 ---
 
 ## 🏗️ Architecture & Project Structure
 
-FlowMate v2.0 Pro enforces a strict modular MVC architecture for high reliability:
+ClipPilot v2.0 Pro enforces a strict modular MVC architecture for high reliability:
 
 ```
-FlowMate/
+ClipPilot/
 ├── main.py                    # Application Entry Point & Qt Event Loop
 ├── setup.sh                   # Automated Linux Installer Script
 ├── build_windows.bat          # Standalone Windows PyInstaller Script
@@ -142,7 +142,7 @@ FlowMate/
 │
 ├── core/                      # Engine & Business Logic Layer
 │   ├── app_state.py           # Central Application State & Qt Signal Bus
-│   ├── naming_engine.py       # [v2.0] Dynamic Tokenized Filename Parser
+│   ├── naming_engine.py       # Dynamic Tokenized Filename Parser
 │   ├── watcher.py             # QThread Watchdog Directory Observer
 │   ├── renamer.py             # Atomic File Locking & Sequential Renamer
 │   ├── project_manager.py     # JSON Project Workspace Persistence
@@ -154,7 +154,7 @@ FlowMate/
 │   ├── styles.py              # QSS Modern Dark Theme Design System
 │   ├── views/                 # View Screens
 │   │   ├── dashboard_view.py  # Active Project Dashboard & Live Template Preview
-│   │   ├── batch_view.py      # [v2.0] Drag & Drop Batch Renamer Lab
+│   │   ├── batch_view.py      # Drag & Drop Batch Renamer Lab
 │   │   ├── projects_view.py   # Multi-Project Workspace Manager
 │   │   ├── logs_view.py       # Live Activity & File Rename Audits
 │   │   └── settings_view.py   # System Preferences & OS Autostart
@@ -177,6 +177,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 Crafted with ❤️ by **[Kanon Hosen](https://github.com/Kanon-Hosen)**
 
-*Star ⭐ this repository if FlowMate saved you time!*
+*Star ⭐ this repository if ClipPilot saved you time!*
 
 </div>

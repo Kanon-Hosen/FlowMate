@@ -105,7 +105,7 @@ class ProjectManager:
                 project_id="default",
                 name="Default Project",
                 watch_dir=str(Path.home() / "Downloads"),
-                output_dir=str(Path.home() / "Videos" / "FlowMate_Output"),
+                output_dir=str(Path.home() / "Videos" / "ClipPilot_Output"),
                 current_counter=1,
                 padding_digits=3
             )

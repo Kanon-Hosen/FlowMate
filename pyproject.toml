@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "flowmate"
-version = "1.0.0"
-description = "FlowMate - Automated File Watcher & Renamer"
+name = "clippilot"
+version = "2.0.0"
+description = "ClipPilot - Automated Video & File Pilot"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
