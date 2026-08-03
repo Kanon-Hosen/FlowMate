@@ -8,6 +8,9 @@ root_dir = Path(__file__).resolve().parent.parent
 if str(root_dir) not in sys.path:
     sys.path.insert(0, str(root_dir))
 
+# Pre-compiled fast regex pattern for OS filename sanitization
+INVALID_CHARS_PATTERN = re.compile(r'[\\/*?:"<>|]')
+
 def render_filename_template(
     template: str,
     counter: int,
@@ -17,15 +20,7 @@ def render_filename_template(
     extension: str
 ) -> str:
     """
-    Evaluates dynamic filename template string with tokens.
-    
-    Tokens supported:
-      {counter}   : Sequential padded number (e.g. 001)
-      {project}   : Name of active project
-      {date}      : Current date (YYYY-MM-DD)
-      {time}      : Current time (HH-MM-SS)
-      {original}  : Original filename base (without extension)
-      {ext}       : File extension without leading dot (e.g. mp4)
+    High-performance tokenized filename template evaluator.
     """
     if not template or not template.strip():
         template = "{counter}"
@@ -35,9 +30,9 @@ def render_filename_template(
     orig_base = Path(original_filename).stem
     ext_clean = extension.lstrip(".")
 
-    # Sanitize inputs
-    clean_project = re.sub(r'[\\/*?:"<>|]', '_', project_name)
-    clean_original = re.sub(r'[\\/*?:"<>|]', '_', orig_base)
+    # Fast inline sanitization
+    clean_project = INVALID_CHARS_PATTERN.sub('_', project_name)
+    clean_original = INVALID_CHARS_PATTERN.sub('_', orig_base)
 
     replacements = {
         "{counter}": formatted_counter,
@@ -52,10 +47,10 @@ def render_filename_template(
     for token, val in replacements.items():
         result = result.replace(token, val)
 
-    # Sanitize output filename to prevent invalid OS characters
-    result = re.sub(r'[\\/*?:"<>|]', '_', result).strip()
+    # Sanitize final output filename
+    result = INVALID_CHARS_PATTERN.sub('_', result).strip()
 
-    # Ensure proper extension
+    # Fast suffix check
     ext_suffix = f".{ext_clean}" if ext_clean else ""
     if not result.lower().endswith(ext_suffix.lower()):
         result = f"{result}{ext_suffix}"

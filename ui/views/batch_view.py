@@ -193,19 +193,23 @@ class BatchView(QWidget):
         self._refresh_table()
 
     def _refresh_table(self):
-        self.table.setRowCount(len(self.file_items))
-        for row, item in enumerate(self.file_items):
-            item_orig = QTableWidgetItem(item["orig_name"])
-            item_sim = QTableWidgetItem(item["simulated_name"])
-            item_sim.setForeground(Qt.GlobalColor.green)
-            item_loc = QTableWidgetItem(item["src_path"])
-            item_status = QTableWidgetItem(item["status"])
-            item_status.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.table.setUpdatesEnabled(False)
+        try:
+            self.table.setRowCount(len(self.file_items))
+            for row, item in enumerate(self.file_items):
+                item_orig = QTableWidgetItem(item["orig_name"])
+                item_sim = QTableWidgetItem(item["simulated_name"])
+                item_sim.setForeground(Qt.GlobalColor.green)
+                item_loc = QTableWidgetItem(item["src_path"])
+                item_status = QTableWidgetItem(item["status"])
+                item_status.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
 
-            self.table.setItem(row, 0, item_orig)
-            self.table.setItem(row, 1, item_sim)
-            self.table.setItem(row, 2, item_loc)
-            self.table.setItem(row, 3, item_status)
+                self.table.setItem(row, 0, item_orig)
+                self.table.setItem(row, 1, item_sim)
+                self.table.setItem(row, 2, item_loc)
+                self.table.setItem(row, 3, item_status)
+        finally:
+            self.table.setUpdatesEnabled(True)
 
     def _clear_list(self):
         self.file_items.clear()

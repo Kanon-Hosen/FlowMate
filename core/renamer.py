@@ -36,6 +36,7 @@ class FileRenamer:
 
         start_time = time.time()
         last_size = -1
+        poll_interval = 0.05  # Adaptive micro-poll (50ms)
 
         while time.time() - start_time < wait_timeout:
             try:
@@ -53,9 +54,10 @@ class FileRenamer:
                         pass
 
                 last_size = current_size
-                time.sleep(0.4)
+                time.sleep(poll_interval)
+                poll_interval = min(0.3, poll_interval * 1.3)  # Gentle ramp-up up to 300ms max
             except Exception:
-                time.sleep(0.4)
+                time.sleep(0.1)
 
         return True
 

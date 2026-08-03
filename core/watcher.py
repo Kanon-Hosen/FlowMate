@@ -33,10 +33,10 @@ class DownloadEventHandler(FileSystemEventHandler):
 
         now = time.time()
         with self._lock:
-            self._recent_events = {p: t for p, t in self._recent_events.items() if now - t < 10.0}
+            self._recent_events = {p: t for p, t in self._recent_events.items() if now - t < 5.0}
 
             if path in self._recent_events:
-                if now - self._recent_events[path] < 3.0:
+                if now - self._recent_events[path] < 0.5:
                     return False
 
             self._recent_events[path] = now
