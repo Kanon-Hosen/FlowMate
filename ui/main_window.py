@@ -314,6 +314,8 @@ class MainWindow(QMainWindow):
 
     def quit_app(self):
         self.stop_watching()
+        if hasattr(self, "tray_icon") and self.tray_icon is not None:
+            self.tray_icon.hide()
         self.app_state.settings_manager.set("window_width", self.width())
         self.app_state.settings_manager.set("window_height", self.height())
         QApplication.quit()
