@@ -1,8 +1,10 @@
 <div align="center">
 
+<img src="assets/logo.png" width="128" height="128" alt="ClipPilot Logo" style="border-radius: 20px;">
+
 # ✈️ ClipPilot v2.0 Pro
 
-### *Automated Sequential Video & File Management Pilot*
+### *Automated Sequential Video & Media File Pilot*
 
 [![Version 2.0.0](https://img.shields.io/badge/Version-v2.0.0%20Pro-6366F1?style=for-the-badge&logo=rocket&logoColor=white)](https://github.com/Kanon-Hosen/FlowMate)
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
@@ -10,7 +12,7 @@
 [![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-0078D6?style=for-the-badge&logo=apple&logoColor=white)](#-installation)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
-*ClipPilot v2.0 Pro automatically detects completed browser downloads (Google Chrome, Edge, Firefox), parses dynamic naming templates, renames files sequentially (e.g. `Shorts_2026-08-04_001.mp4`), and offers a Drag-and-Drop Batch Lab for offline media libraries.*
+*ClipPilot v2.0 Pro automatically detects completed browser downloads (Google Chrome, Edge, Firefox, Safari), parses dynamic naming templates, renames media files in numeric sequence (e.g. `Shorts_2026-08-04_001.mp4`), and provides a Drag-and-Drop Batch Lab for offline media libraries.*
 
 [Key Features](#-key-features) •
 [Dynamic Templates](#-dynamic-naming-templates) •
@@ -25,22 +27,22 @@
 
 ## 📖 Overview
 
-When producing video content, downloading multiple video clips manually one-by-one from web tools or Google Chrome often leads to messy download folders filled with unorganized default filenames (e.g. `download (1).mp4`, `videoplayback.mp4`).
+When producing video content for YouTube, TikTok, or stock media libraries, downloading multiple video clips manually one-by-one often leads to cluttered download directories filled with messy default filenames (e.g. `download (1).mp4`, `videoplayback.mp4`).
 
-**ClipPilot v2.0 Pro** solves this workflow bottleneck. Operating silently in the background, ClipPilot monitors your browser download directory, waits for file write completion to ensure zero data corruption, parses custom naming patterns, automatically renames the files in numeric sequence (`001.mp4`, `Shorts_2026-08-04_001.mp4`...), and instantly relocates them into designated output project folders.
+**ClipPilot v2.0 Pro** eliminates this manual overhead. Operating silently in the background, ClipPilot monitors your browser download directory, waits for file write completion to prevent data corruption using adaptive 50ms micro-polling, parses custom naming patterns, automatically renames files in numeric sequence (`001.mp4`, `YouTube_Shorts_2026-08-04_001.mp4`...), and instantly relocates them into designated output project folders.
 
 ---
 
 ## ✨ Key Features (v2.0 Pro)
 
-- **🏷️ Dynamic Naming Templates**: Support tokenized placeholders like `{project}_{date}_{counter}.mp4` with a live preview.
+- **🏷️ Dynamic Naming Templates**: Support tokenized placeholders like `{project}_{date}_{counter}.mp4` with real-time live previewing.
 - **📦 Batch Drag-and-Drop Lab**: Drag and drop existing media files or entire folders to simulate and bulk-rename offline files in seconds.
-- **⚡ Real-time Directory Monitoring**: Powered by native OS file system events (`watchdog`) to instantly detect new downloads without high CPU polling.
-- **🛡️ Thread-Safe & Atomic File Locking**: Includes multi-stage size stabilization and OS file handle verification to prevent race conditions during large file downloads.
-- **🔢 Minimum File Size Filtering**: Skip incomplete, tiny, or junk thumbnail files below a specified MB threshold.
-- **⚙️ OS Autostart Integration**: Easily configure ClipPilot to launch automatically on Linux or Windows system boot.
-- **🔔 System Tray Integration**: Minimizes to Linux / Windows system tray for uninterrupted background operation with desktop notifications.
-- **🎨 Modern Dark Theme UX**: Fluent-inspired dark UI with custom typography (`Ubuntu` / `Inter`), glassmorphism card widgets, and glowing status badges.
+- **⚡ Adaptive 50ms Micro-Polling Engine**: High-performance file write lock verification moves files in under 100ms once downloads finish.
+- **⚡ Real-time Directory Monitoring**: Powered by native OS file system events (`watchdog`) to detect new downloads instantly without high CPU polling.
+- **🛡️ Thread-Safe & Atomic File Relocation**: Includes multi-stage size stabilization and OS file handle verification to prevent race conditions during large file downloads.
+- **🔢 Minimum File Size Filtering**: Automatically skip incomplete, tiny, or junk thumbnail files below a specified MB threshold.
+- **⚙️ OS Autostart & System Tray Control**: Easily configure ClipPilot to launch on OS boot or toggle System Tray background monitoring.
+- **🎨 3D Glassmorphism Dark UX**: Fluent-inspired dark UI with custom typography (`Inter` / `Ubuntu`), glowing card widgets, and status badges.
 
 ---
 
@@ -142,7 +144,7 @@ ClipPilot/
 │
 ├── core/                      # Engine & Business Logic Layer
 │   ├── app_state.py           # Central Application State & Qt Signal Bus
-│   ├── naming_engine.py       # Dynamic Tokenized Filename Parser
+│   ├── naming_engine.py       # High-Performance Tokenized Filename Parser
 │   ├── watcher.py             # QThread Watchdog Directory Observer
 │   ├── renamer.py             # Atomic File Locking & Sequential Renamer
 │   ├── project_manager.py     # JSON Project Workspace Persistence
@@ -161,7 +163,7 @@ ClipPilot/
 │   └── widgets/               # Reusable Custom Controls & Sidebar
 │
 ├── assets/                    # Application Branding & Icons
-│   └── logo.png
+│   └── logo.png               # Official 3D Glassmorphic App Icon
 └── projects/                  # Saved Project JSON Workspace Files
 ```
 
