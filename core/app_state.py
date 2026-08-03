@@ -26,8 +26,11 @@ class AppState(QObject):
         self.renamer = FileRenamer(self.project_manager)
 
         active_id = self.settings_manager.get("active_project_id", "default")
-        self.active_project: Project = self.project_manager.get_project(active_id) or self.project_manager.get_project("default")
-        
+        proj = self.project_manager.get_project(active_id) or self.project_manager.get_project("default")
+        if proj is None:
+            proj = list(self.project_manager.load_all_projects().values())[0]
+
+        self.active_project: Project = proj
         self.is_watching: bool = False
 
     def set_active_project(self, project_id: str) -> Optional[Project]:
@@ -36,7 +39,6 @@ class AppState(QObject):
         if project:
             self.active_project = project
             self.settings_manager.set("active_project_id", project.id)
-            # Smart scan output folder when switching project
             self.project_manager.detect_and_update_counter(project)
             self.active_project_changed.emit(project)
             self.emit_stats()

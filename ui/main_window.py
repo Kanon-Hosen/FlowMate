@@ -98,7 +98,7 @@ class MainWindow(QMainWindow):
             self.setWindowIcon(QIcon(str(LOGO_PATH)))
         else:
             # Fallback Qt standard icon
-            icon = self.style().standardIcon(QStyle.SP_ComputerIcon)
+            icon = self.style().standardIcon(QStyle.StandardPixmap.SP_ComputerIcon)
             self.tray_icon.setIcon(icon)
             self.setWindowIcon(icon)
 
@@ -245,7 +245,7 @@ class MainWindow(QMainWindow):
                 self.tray_icon.showMessage(
                     "FlowMate File Renamed",
                     f"Renamed: {orig_name}\n→ {new_name}",
-                    QSystemTrayIcon.Information,
+                    QSystemTrayIcon.MessageIcon.Information,
                     3000
                 )
 
@@ -288,7 +288,7 @@ class MainWindow(QMainWindow):
             self.start_watching()
 
     def _on_tray_activated(self, reason):
-        if reason == QSystemTrayIcon.Trigger:
+        if reason == QSystemTrayIcon.ActivationReason.Trigger:
             if self.isVisible():
                 self.hide()
             else:
@@ -301,7 +301,7 @@ class MainWindow(QMainWindow):
             self.tray_icon.showMessage(
                 "FlowMate running in background",
                 "FlowMate is still watching your downloads folder in the system tray.",
-                QSystemTrayIcon.Information,
+                QSystemTrayIcon.MessageIcon.Information,
                 2000
             )
         else:

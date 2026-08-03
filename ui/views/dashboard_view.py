@@ -168,10 +168,10 @@ class DashboardView(QWidget):
 
         self.table = QTableWidget(0, 4)
         self.table.setHorizontalHeaderLabels(["Time", "Original Filename", "New Filename", "Status"])
-        self.table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
-        self.table.horizontalHeader().setSectionResizeMode(1, QHeaderView.Stretch)
-        self.table.horizontalHeader().setSectionResizeMode(2, QHeaderView.Stretch)
-        self.table.horizontalHeader().setSectionResizeMode(3, QHeaderView.ResizeToContents)
+        self.table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
+        self.table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
+        self.table.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)
+        self.table.horizontalHeader().setSectionResizeMode(3, QHeaderView.ResizeMode.ResizeToContents)
         activity_layout.addWidget(self.table)
 
         main_layout.addWidget(activity_card)
@@ -193,8 +193,8 @@ class DashboardView(QWidget):
 
         formatted_val = f"{project.current_counter:0{project.padding_digits}d}"
         self.card_counter.set_value(formatted_val)
-        self.card_today.set_value(project.files_today)
-        self.card_total.set_value(project.files_total)
+        self.card_today.set_value(str(project.files_today))
+        self.card_total.set_value(str(project.files_total))
 
     def update_stats_ui(self, stats: dict):
         counter = stats.get("current_counter", 1)
@@ -204,8 +204,8 @@ class DashboardView(QWidget):
         self.counter_spinbox.blockSignals(False)
 
         self.card_counter.set_value(f"{counter:0{padding}d}")
-        self.card_today.set_value(stats.get("files_today", 0))
-        self.card_total.set_value(stats.get("files_total", 0))
+        self.card_today.set_value(str(stats.get("files_today", 0)))
+        self.card_total.set_value(str(stats.get("files_total", 0)))
 
     def update_watcher_status(self, is_watching: bool, watch_dir: str):
         self.status_badge.set_status(is_watching)
@@ -273,7 +273,7 @@ class DashboardView(QWidget):
         reply = QMessageBox.question(
             self, "Reset Counter",
             "Are you sure you want to reset the file counter back to 1?",
-            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No
         )
-        if reply == QMessageBox.Yes:
+        if reply == QMessageBox.StandardButton.Yes:
             self.reset_counter_requested.emit()

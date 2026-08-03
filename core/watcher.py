@@ -8,7 +8,7 @@ root_dir = Path(__file__).resolve().parent.parent
 if str(root_dir) not in sys.path:
     sys.path.insert(0, str(root_dir))
 
-from typing import Optional, Dict
+from typing import Optional, Dict, Any
 from PySide6.QtCore import QThread, Signal
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
@@ -33,7 +33,6 @@ class DownloadEventHandler(FileSystemEventHandler):
 
         now = time.time()
         with self._lock:
-            # Purge entries older than 10 seconds
             self._recent_events = {p: t for p, t in self._recent_events.items() if now - t < 10.0}
 
             if path in self._recent_events:
@@ -46,7 +45,7 @@ class DownloadEventHandler(FileSystemEventHandler):
     def on_created(self, event):
         if event.is_directory:
             return
-        path = event.src_path
+        path = str(event.src_path)
         if self._should_process(path):
             logger.info(f"Watchdog detected new file creation: {path}")
             self.callback(path)
@@ -54,7 +53,7 @@ class DownloadEventHandler(FileSystemEventHandler):
     def on_moved(self, event):
         if event.is_directory:
             return
-        dest_path = event.dest_path
+        dest_path = str(event.dest_path)
         if self._should_process(dest_path):
             logger.info(f"Watchdog detected Chrome download completion move: {event.src_path} -> {dest_path}")
             self.callback(dest_path)
@@ -71,7 +70,7 @@ class WatcherThread(QThread):
     def __init__(self, watch_dir: str, parent=None):
         super().__init__(parent)
         self.watch_dir = watch_dir
-        self.observer: Optional[Observer] = None
+        self.observer: Any = None
         self._is_running = False
 
     def run(self):
@@ -87,9 +86,10 @@ class WatcherThread(QThread):
 
         try:
             handler = DownloadEventHandler(self._on_event)
-            self.observer = Observer()
-            self.observer.schedule(handler, str(target_path), recursive=False)
-            self.observer.start()
+            obs = Observer()
+            self.observer = obs
+            obs.schedule(handler, str(target_path), recursive=False)
+            obs.start()
             self._is_running = True
             logger.info(f"WatcherThread monitoring directory: {expanded}")
             self.started_signal.emit(expanded)
@@ -102,7 +102,7 @@ class WatcherThread(QThread):
             logger.error(err)
             self.error_signal.emit(err)
         finally:
-            if self.observer and self.observer.is_alive():
+            if self.observer is not None and getattr(self.observer, "is_alive", lambda: False)():
                 self.observer.stop()
                 self.observer.join()
             self._is_running = False
@@ -115,6 +115,6 @@ class WatcherThread(QThread):
     def stop(self):
         """Stops the watcher thread cleanly."""
         self._is_running = False
-        if self.observer and self.observer.is_alive():
+        if self.observer is not None and getattr(self.observer, "is_alive", lambda: False)():
             self.observer.stop()
         self.wait(2000)

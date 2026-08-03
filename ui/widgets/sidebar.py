@@ -42,7 +42,7 @@ class Sidebar(QFrame):
         title_box = QVBoxLayout()
         title_box.setSpacing(2)
         app_name = QLabel("FlowMate")
-        app_name.setFont(QFont("Segoe UI", 16, QFont.Bold))
+        app_name.setFont(QFont("Segoe UI", 16, QFont.Weight.Bold))
         app_name.setStyleSheet("color: #F8FAFC;")
 
         app_subtitle = QLabel("Auto Renamer")
@@ -101,7 +101,7 @@ class Sidebar(QFrame):
         # Footer
         footer_label = QLabel("FlowMate v1.0.0 Pro")
         footer_label.setStyleSheet("color: #475569; font-size: 11px; text-align: center;")
-        footer_label.setAlignment(Qt.AlignCenter)
+        footer_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(footer_label)
 
     def set_projects(self, projects: list, active_project_id: str):

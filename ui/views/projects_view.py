@@ -12,13 +12,14 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtCore import Signal, Qt
 from core.app_state import AppState
+from typing import Optional
 from core.project_manager import Project
 from ui.widgets.custom_controls import PathPickerRow
 
 class CreateProjectDialog(QDialog):
     """Modal dialog for creating or editing a FlowMate Project."""
 
-    def __init__(self, parent=None, project: Project = None):
+    def __init__(self, parent=None, project: Optional[Project] = None):
         super().__init__(parent)
         self.project = project
         self.setWindowTitle("Edit Project" if project else "Create New Project")
@@ -147,12 +148,12 @@ class ProjectsView(QWidget):
         self.table.setHorizontalHeaderLabels([
             "Status", "Project Name", "Watch Folder", "Output Folder", "Counter", "Actions"
         ])
-        self.table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
-        self.table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
-        self.table.horizontalHeader().setSectionResizeMode(2, QHeaderView.Stretch)
-        self.table.horizontalHeader().setSectionResizeMode(3, QHeaderView.Stretch)
-        self.table.horizontalHeader().setSectionResizeMode(4, QHeaderView.ResizeToContents)
-        self.table.horizontalHeader().setSectionResizeMode(5, QHeaderView.ResizeToContents)
+        self.table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
+        self.table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)
+        self.table.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)
+        self.table.horizontalHeader().setSectionResizeMode(3, QHeaderView.ResizeMode.Stretch)
+        self.table.horizontalHeader().setSectionResizeMode(4, QHeaderView.ResizeMode.ResizeToContents)
+        self.table.horizontalHeader().setSectionResizeMode(5, QHeaderView.ResizeMode.ResizeToContents)
 
         table_layout.addWidget(self.table)
         main_layout.addWidget(table_card)
@@ -214,7 +215,7 @@ class ProjectsView(QWidget):
 
     def _on_new_project(self):
         dialog = CreateProjectDialog(self)
-        if dialog.exec() == QDialog.Accepted:
+        if dialog.exec() == QDialog.DialogCode.Accepted:
             data = dialog.get_data()
             if not data["name"]:
                 QMessageBox.warning(self, "Invalid Input", "Project Name is required.")
@@ -233,7 +234,7 @@ class ProjectsView(QWidget):
 
     def _on_edit_project(self, project: Project):
         dialog = CreateProjectDialog(self, project=project)
-        if dialog.exec() == QDialog.Accepted:
+        if dialog.exec() == QDialog.DialogCode.Accepted:
             data = dialog.get_data()
             project.name = data["name"]
             project.description = data["description"]
@@ -255,9 +256,9 @@ class ProjectsView(QWidget):
         reply = QMessageBox.question(
             self, "Confirm Delete",
             f"Are you sure you want to delete project '{project_id}'?",
-            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No
         )
-        if reply == QMessageBox.Yes:
+        if reply == QMessageBox.StandardButton.Yes:
             self.app_state.project_manager.delete_project(project_id)
             if self.app_state.active_project.id == project_id:
                 self.app_state.set_active_project("default")

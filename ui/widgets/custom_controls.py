@@ -71,9 +71,9 @@ class PathPickerRow(QWidget):
             reply = QMessageBox.question(
                 self, "Directory Missing",
                 f"Directory does not exist:\n{expanded_path}\n\nWould you like to create it now?",
-                QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.Yes
             )
-            if reply == QMessageBox.Yes:
+            if reply == QMessageBox.StandardButton.Yes:
                 try:
                     os.makedirs(expanded_path, exist_ok=True)
                 except Exception as e:
