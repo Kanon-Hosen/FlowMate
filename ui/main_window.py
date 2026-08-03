@@ -37,6 +37,8 @@ class MainWindow(QMainWindow):
         self.watcher_thread = None
 
         self.setWindowTitle("ClipPilot - Automated Video & File Pilot")
+        if LOGO_PATH.exists():
+            self.setWindowIcon(QIcon(str(LOGO_PATH)))
         
         # Load Window Dimensions
         width = self.app_state.settings_manager.get("window_width", 1200)
