@@ -7,7 +7,7 @@
 [![Version 2.0.0](https://img.shields.io/badge/Version-v2.0.0%20Pro-6366F1?style=for-the-badge&logo=rocket&logoColor=white)](https://github.com/Kanon-Hosen/FlowMate)
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![PySide6](https://img.shields.io/badge/GUI-PySide6%20%2F%20Qt%206-41CD52?style=for-the-badge&logo=qt&logoColor=white)](https://pypi.org/project/PySide6/)
-[![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-0078D6?style=for-the-badge&logo=linux&logoColor=white)](#-installation)
+[![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-0078D6?style=for-the-badge&logo=apple&logoColor=white)](#-installation)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
 *FlowMate v2.0 Pro automatically detects completed browser downloads (Google Chrome, Edge, Firefox), parses dynamic naming templates, renames files sequentially (e.g. `Shorts_2026-08-04_001.mp4`), and offers a Drag-and-Drop Batch Lab for offline media libraries.*
@@ -109,6 +109,22 @@ python main.py
 #### Option B: Build Standalone `.exe` (No Python Required)
 1. Double-click `build_windows.bat` in the project root.
 2. Your standalone executable will be generated at `dist/FlowMate.exe`.
+
+---
+
+### 🍎 macOS (Apple Silicon M1/M2/M3/M4 & Intel)
+
+#### Option A: Run via Python
+```bash
+git clone https://github.com/Kanon-Hosen/FlowMate.git
+cd FlowMate
+pip3 install -r requirements.txt
+python3 main.py
+```
+
+#### Option B: Build Standalone `FlowMate.app`
+1. Run `./build_mac.sh` in the terminal.
+2. Double-click `dist/FlowMate.app` to launch!
 
 ---
 
