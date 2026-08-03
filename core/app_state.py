@@ -47,7 +47,7 @@ class AppState(QObject):
 
     def emit_stats(self):
         """Emits current active project statistics."""
-        if self.active_project:
+        if self.active_project is not None:
             self.stats_updated.emit({
                 "files_today": self.active_project.files_today,
                 "files_total": self.active_project.files_total,

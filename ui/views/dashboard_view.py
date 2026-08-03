@@ -246,14 +246,14 @@ class DashboardView(QWidget):
 
     def _on_path_changed(self, text: str):
         proj = self.app_state.active_project
-        if proj:
+        if proj is not None:
             proj.watch_dir = self.watch_picker.get_path()
             proj.output_dir = self.output_picker.get_path()
             self.save_project_requested.emit()
 
     def _on_counter_spinbox_changed(self, val: int):
         proj = self.app_state.active_project
-        if proj:
+        if proj is not None:
             proj.current_counter = val
             self.card_counter.set_value(f"{val:0{proj.padding_digits}d}")
             self.save_project_requested.emit()
@@ -261,7 +261,7 @@ class DashboardView(QWidget):
     def _on_digits_changed(self, index: int):
         padding = self.digits_combo.itemData(index)
         proj = self.app_state.active_project
-        if proj and padding:
+        if proj is not None and padding:
             proj.padding_digits = padding
             self.card_counter.set_value(f"{proj.current_counter:0{padding}d}")
             self.save_project_requested.emit()

@@ -173,7 +173,7 @@ class MainWindow(QMainWindow):
 
     def save_current_project(self):
         proj = self.app_state.active_project
-        if proj:
+        if proj is not None:
             self.app_state.project_manager.save_project(proj)
 
     def start_watching(self):
@@ -251,7 +251,7 @@ class MainWindow(QMainWindow):
 
     def scan_output_folder(self):
         proj = self.app_state.active_project
-        if proj:
+        if proj is not None:
             counter = self.app_state.project_manager.detect_and_update_counter(proj)
             self.app_state.emit_stats()
             QMessageBox.information(
@@ -261,7 +261,7 @@ class MainWindow(QMainWindow):
 
     def reset_counter(self):
         proj = self.app_state.active_project
-        if proj:
+        if proj is not None:
             proj.current_counter = 1
             self.app_state.project_manager.save_project(proj)
             self.app_state.emit_stats()
