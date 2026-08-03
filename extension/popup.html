@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FlowMate Chrome Extension</title>
+  <style>
+    body {
+      width: 280px;
+      margin: 0;
+      padding: 16px;
+      background-color: #0F172A;
+      color: #F8FAFC;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #818CF8;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      background-color: rgba(16, 185, 129, 0.15);
+      color: #34D399;
+      margin-bottom: 12px;
+    }
+    .form-group {
+      margin-bottom: 12px;
+    }
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: #94A3B8;
+      margin-bottom: 4px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #334155;
+      background-color: #1E293B;
+      color: #F8FAFC;
+      font-size: 13px;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      padding: 9px;
+      border-radius: 6px;
+      border: none;
+      background-color: #6366F1;
+      color: white;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    button:hover {
+      background-color: #4F46E5;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">⚡ FlowMate Companion</div>
+  </div>
+
+  <div class="status-badge" id="statusBadge">● FlowMate Desktop Connected</div>
+
+  <div class="form-group">
+    <label for="templateInput">Naming Pattern Template:</label>
+    <input type="text" id="templateInput" value="{project}_{date}_{counter}">
+  </div>
+
+  <div class="form-group">
+    <label for="prefixInput">Custom Prefix:</label>
+    <input type="text" id="prefixInput" placeholder="e.g. YouTube_">
+  </div>
+
+  <button id="saveBtn">Save Settings</button>
+
+  <script src="popup.js"></script>
+</body>
+</html>
