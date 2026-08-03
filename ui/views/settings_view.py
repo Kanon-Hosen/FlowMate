@@ -115,7 +115,7 @@ class SettingsView(QWidget):
     def _on_os_startup_toggled(self, enabled: bool):
         self.app_state.settings_manager.set("launch_on_boot", enabled)
         autostart_dir = Path.home() / ".config" / "autostart"
-        autostart_file = autostart_dir / "FlowMate.desktop"
+        autostart_file = autostart_dir / "ClipPilot.desktop"
 
         if enabled:
             try:
@@ -123,8 +123,8 @@ class SettingsView(QWidget):
                 main_path = Path(__file__).resolve().parent.parent.parent / "main.py"
                 desktop_content = f"""[Desktop Entry]
 Type=Application
-Name=FlowMate
-Comment=Automated File Watcher & Renamer
+Name=ClipPilot
+Comment=Automated Video & File Pilot
 Exec=python3 {main_path}
 Icon=utilities-terminal
 Terminal=false
