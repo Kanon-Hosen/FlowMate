@@ -2,7 +2,7 @@ import sys
 import signal
 from pathlib import Path
 from PySide6.QtWidgets import QApplication
-from PySide6.QtGui import QIcon, QPixmap
+from PySide6.QtGui import QIcon
 from ui.main_window import MainWindow
 from core.logger import logger
 
@@ -18,7 +18,7 @@ def main():
     app = QApplication(sys.argv)
     app.setApplicationName("ClipPilot")
     app.setOrganizationName("ClipPilot")
-    app.setDesktopFileName("ClipPilot.desktop")
+    app.setDesktopFileName("ClipPilot")
 
     if LOGO_PATH.exists():
         app_icon = QIcon(str(LOGO_PATH))
