@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=FlowMate
+GenericName=Automatic File Renamer & Organizer
+Comment=Automatically detect completed video downloads, rename them sequentially, and move them into project folders.
+Exec=python3 /home/kanon/Documents/FlowMate/main.py
+Icon=/home/kanon/Documents/FlowMate/assets/logo.png
+Path=/home/kanon/Documents/FlowMate
+Terminal=false
+Categories=Utility;FileManager;
+Keywords=Renamer;Download;Video;Automation;
+StartupWMClass=FlowMate
