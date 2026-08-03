@@ -33,7 +33,6 @@ When producing video content, downloading multiple video clips manually one-by-o
 
 ## ✨ Key Features (v2.0 Pro)
 
-- **🌐 Chrome Extension Companion**: Official Manifest V3 browser extension (`extension/`) to intercept downloads directly inside Google Chrome & Edge.
 - **🏷️ Dynamic Naming Templates**: Support tokenized placeholders like `{project}_{date}_{counter}.mp4` with a live preview.
 - **📦 Batch Drag-and-Drop Lab**: Drag and drop existing media files or entire folders to simulate and bulk-rename offline files in seconds.
 - **⚡ Real-time Directory Monitoring**: Powered by native OS file system events (`watchdog`) to instantly detect new downloads without high CPU polling.
