@@ -137,6 +137,7 @@ FlowMate/
 ├── main.py                    # Application Entry Point & Qt Event Loop
 ├── setup.sh                   # Automated Linux Installer Script
 ├── build_windows.bat          # Standalone Windows PyInstaller Script
+├── build_mac.sh               # Standalone macOS PyInstaller Script
 ├── requirements.txt           # Python Package Dependencies
 │
 ├── core/                      # Engine & Business Logic Layer
