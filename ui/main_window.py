@@ -298,12 +298,12 @@ class MainWindow(QMainWindow):
                 self.show_normal_window()
 
     def closeEvent(self, event):
-        if self.app_state.settings_manager.get("minimize_to_tray", True) and QSystemTrayIcon.isSystemTrayAvailable():
+        if self.app_state.settings_manager.get("minimize_to_tray", False) and QSystemTrayIcon.isSystemTrayAvailable():
             event.ignore()
             self.hide()
             self.tray_icon.showMessage(
-                "FlowMate running in background",
-                "FlowMate is still watching your downloads folder in the system tray.",
+                "ClipPilot Running in Background",
+                "ClipPilot is still monitoring downloads from your system tray.",
                 QSystemTrayIcon.MessageIcon.Information,
                 2000
             )

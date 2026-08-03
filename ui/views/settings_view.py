@@ -69,22 +69,22 @@ class SettingsView(QWidget):
         form_layout.addRow("Application Theme:", self.theme_combo)
 
         # Auto-start watcher
-        self.autostart_cb = QCheckBox("Automatically start folder watching when FlowMate launches")
+        self.autostart_cb = QCheckBox("Automatically start folder watching when ClipPilot launches")
         self.autostart_cb.toggled.connect(lambda v: self.app_state.settings_manager.set("auto_start_watcher", v))
         form_layout.addRow("Auto Watcher:", self.autostart_cb)
 
         # Desktop Notifications
-        self.notify_cb = QCheckBox("Show Linux desktop notifications when files are renamed & moved")
+        self.notify_cb = QCheckBox("Show desktop notifications when files are renamed & moved")
         self.notify_cb.toggled.connect(lambda v: self.app_state.settings_manager.set("enable_desktop_notifications", v))
         form_layout.addRow("Notifications:", self.notify_cb)
 
         # Minimize to Tray
-        self.tray_cb = QCheckBox("Minimize application to system tray on window close")
+        self.tray_cb = QCheckBox("Minimize application to system tray on window close (keeps monitoring)")
         self.tray_cb.toggled.connect(lambda v: self.app_state.settings_manager.set("minimize_to_tray", v))
         form_layout.addRow("System Tray:", self.tray_cb)
 
         # OS Boot Startup
-        self.os_startup_cb = QCheckBox("Launch FlowMate automatically on OS system startup")
+        self.os_startup_cb = QCheckBox("Launch ClipPilot automatically on OS system startup")
         self.os_startup_cb.toggled.connect(self._on_os_startup_toggled)
         form_layout.addRow("OS Autostart:", self.os_startup_cb)
 
@@ -103,7 +103,7 @@ class SettingsView(QWidget):
 
         self.autostart_cb.setChecked(settings.get("auto_start_watcher", False))
         self.notify_cb.setChecked(settings.get("enable_desktop_notifications", True))
-        self.tray_cb.setChecked(settings.get("minimize_to_tray", True))
+        self.tray_cb.setChecked(settings.get("minimize_to_tray", False))
         self.os_startup_cb.setChecked(settings.get("launch_on_boot", False))
 
     def _on_theme_changed(self, index: int):
