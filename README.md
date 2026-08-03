@@ -1,125 +1,160 @@
-# FlowMate ⚡
+<div align="center">
 
-**FlowMate** is a production-grade, asynchronous Linux desktop application designed for **Zorin OS 18 / Ubuntu Linux**. It automatically detects completed Google Chrome downloads, sequentially renames video clips or files (e.g. `001.mp4`, `002.mp4`, `003.mp4`...), and moves them cleanly into your output project directory.
+# ⚡ FlowMate
 
-![FlowMate Header](assets/logo.png)
+### *Automated Sequential Video Renamer & File Management Engine*
 
----
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![PySide6](https://img.shields.io/badge/GUI-PySide6%20%2F%20Qt%206-41CD52?style=for-the-badge&logo=qt&logoColor=white)](https://pypi.org/project/PySide6/)
+[![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-0078D6?style=for-the-badge&logo=linux&logoColor=white)](#-installation)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
-## 🎯 Purpose & Features
+*FlowMate automatically detects completed browser downloads (Google Chrome, Edge, Firefox), renames files sequentially (e.g. `001.mp4`, `002.mp4`), and organizes them into project directories in real time.*
 
-When downloading numerous video clips (e.g., from Google Flow or Chrome), manual file organizing is tedious. **FlowMate** automates this completely:
-
-- **Chrome Download Detection**: Ignores temporary `.crdownload`, `.tmp`, and `.part` files during download and triggers instantly when Chrome finishes writing.
-- **Smart Counter Engine**: Scans your destination folder on startup to detect the highest existing number (e.g. `003.mp4`) and automatically continues numbering (`004.mp4`).
-- **Conflict Prevention**: Never overwrites existing files. If `004.mp4` exists, it advances the counter automatically.
-- **Threaded & Non-Blocking**: Built with `QThread` and asynchronous `Watchdog` event monitoring to guarantee a 100% smooth, responsive UI.
-- **Zorin OS / Fluent Design UI**: Modern dark and light themes, responsive card layouts, statistics metrics, and activity tables.
-- **Project Support**: Create, manage, and switch between separate project workspaces, each with custom watch paths, destination folders, and counters.
-- **System Tray & Linux Desktop Notifications**: Native Linux notifications when files are renamed, with background tray monitoring.
-- **Activity Logging & Export**: Real-time logging table with search filtering and CSV/TXT log export capabilities.
-- **Keyboard Shortcuts**: Built-in hotkeys for fast control.
+[Key Features](#-key-features) •
+[Installation](#-installation) •
+[Quick Start](#-quick-start) •
+[Architecture](#-architecture) •
+[Cross-Platform](#-cross-platform-support) •
+[License](#-license)
 
 ---
 
-## 🖥️ System Requirements
+</div>
 
-- **Operating System**: Zorin OS 18 / Ubuntu 22.04 LTS+ / Any Modern Linux Desktop
-- **Python**: Python 3.12+
+## 📖 Overview
+
+When producing video content, downloading multiple video clips manually one-by-one from web tools or Google Chrome often leads to messy download folders filled with unorganized default filenames (e.g. `download (1).mp4`, `videoplayback.mp4`).
+
+**FlowMate** solves this workflow bottleneck. Operating silently in the background, FlowMate monitors your browser download directory, waits for file write completion to ensure zero data corruption, automatically renames the files in numeric sequence (`001.mp4`, `002.mp4`, `003.mp4`...), and instantly relocates them into designated output project folders.
+
+---
+
+## ✨ Key Features
+
+- **⚡ Real-time Directory Monitoring**: Powered by native OS file system events (`watchdog`) to instantly detect new downloads without high CPU polling.
+- **🛡️ Thread-Safe & Atomic File Locking**: Includes multi-stage size stabilization and OS file handle verification to prevent race conditions during large file downloads.
+- **🔢 Custom Sequential Renaming**: Define custom counter padding digits (`01.mp4`, `001.mp4`, `0001.mp4`) with automatic daily activity tracking.
+- **📂 Multi-Project Workspaces**: Switch seamlessly between video production projects, each maintaining its own watch folder, target directory, and independent counters.
+- **🔔 System Tray Integration**: Minimizes to Linux / Windows system tray for uninterrupted background operation with desktop notifications.
+- **🎨 Modern Dark Theme UX**: Fluent-inspired dark UI with custom typography (`Ubuntu` / `Inter`), glassmorphism card widgets, and glowing status badges.
+- **📊 Real-time Activity Logs**: Integrated in-app log viewer and persistent file logging (`logs/flowmate.log`) to audit every rename event.
+
+---
+
+## 🛠️ Tech Stack & Dependencies
+
+- **Language**: Python 3.12+
 - **GUI Framework**: PySide6 (Qt 6 for Python)
-- **Watcher Engine**: Watchdog
+- **File System Observer**: Watchdog (native C-extension OS watcher)
+- **Architecture**: Model-View-Controller (MVC) with Qt Signals/Slots thread isolation
 
 ---
 
-## 📦 Installation & Setup
+## 🚀 Quick Start
 
-1. **Clone or Navigate to the Repository**:
-   ```bash
-   cd FlowMate
-   ```
+### 🐧 Linux (Zorin OS 18 / Ubuntu / Mint / Debian)
 
-2. **Set up Virtual Environment**:
-   ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate
-   ```
-
-3. **Install Dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
----
-
-## 🚀 Running FlowMate
-
-Launch FlowMate using Python:
-
+#### 1. Clone the Repository
 ```bash
+git clone https://github.com/Kanon-Hosen/FlowMate.git
+cd FlowMate
+```
+
+#### 2. Run Automated Setup
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+#### 3. Launch FlowMate
+```bash
+python3 main.py
+```
+*(Or double-click the **FlowMate** desktop shortcut created by `setup.sh` on your desktop!)*
+
+---
+
+### 🪟 Windows (10 / 11)
+
+#### Option A: Run via Python
+```cmd
+git clone https://github.com/Kanon-Hosen/FlowMate.git
+cd FlowMate
+pip install -r requirements.txt
 python main.py
 ```
 
-Or using the virtual environment directly:
+#### Option B: Build Standalone `.exe` (No Python Required)
+1. Double-click `build_windows.bat` in the project root.
+2. Your standalone executable will be generated at `dist/FlowMate.exe`.
 
-```bash
-./.venv/bin/python main.py
+---
+
+## 🏗️ Architecture & Project Structure
+
+FlowMate enforces a strict modular MVC architecture for high reliability:
+
 ```
-
----
-
-## ⌨️ Keyboard Shortcuts
-
-| Shortcut | Description |
-| :--- | :--- |
-| `Ctrl + S` | Toggle Start / Stop Watching |
-| `Ctrl + O` | Open Output Folder in File Manager |
-| `Ctrl + W` | Open Watch Folder in File Manager |
-| `Ctrl + L` | Switch to Logs View |
-
----
-
-## 📁 Project Architecture
-
-```text
 FlowMate/
-├── main.py                    # Application bootstrap & Qt loop initializer
-├── requirements.txt           # Project dependencies (PySide6, watchdog)
-├── README.md                  # Project documentation
+├── main.py                    # Application Entry Point & Qt Event Loop
+├── setup.sh                   # Automated Linux Installer Script
+├── build_windows.bat          # Standalone Windows PyInstaller Script
+├── requirements.txt           # Python Package Dependencies
 │
-├── config/
-│   └── app_config.json        # Application configuration & theme options
+├── core/                      # Engine & Business Logic Layer
+│   ├── app_state.py           # Central Application State & Qt Signal Bus
+│   ├── watcher.py             # QThread Watchdog Directory Observer
+│   ├── renamer.py             # Atomic File Locking & Sequential Renamer
+│   ├── project_manager.py     # JSON Project Workspace Persistence
+│   ├── settings.py            # User Preferences Storage
+│   └── logger.py              # File & Qt Real-time Log Handlers
 │
-├── core/
-│   ├── app_state.py           # Central application state & global signal bus
-│   ├── logger.py              # Thread-safe logging & Qt bridge
-│   ├── project_manager.py     # Project persistence & smart counter scanner
-│   ├── renamer.py             # File renaming engine & file lock checker
-│   ├── settings.py            # Global settings manager
-│   └── watcher.py             # QThread async Watchdog directory observer
+├── ui/                        # User Interface Layer (PySide6)
+│   ├── main_window.py         # Primary Desktop Shell Window
+│   ├── styles.py              # QSS Modern Dark Theme Design System
+│   ├── views/                 # View Screens
+│   │   ├── dashboard_view.py  # Active Project Dashboard & File Monitor
+│   │   ├── projects_view.py   # Multi-Project Workspace Manager
+│   │   ├── logs_view.py       # Live Activity & File Rename Audits
+│   │   └── settings_view.py   # System Preferences
+│   └── widgets/               # Reusable Custom Controls & Sidebar
 │
-├── ui/
-│   ├── styles.py              # Fluent & Zorin OS dark/light stylesheets
-│   ├── main_window.py         # Main window, system tray, & shortcut manager
-│   ├── views/
-│   │   ├── dashboard_view.py  # Dashboard view with stats & activity log
-│   │   ├── projects_view.py   # Workspace & project manager view
-│   │   ├── logs_view.py       # Log search, filter, & export view
-│   │   └── settings_view.py   # Global settings & theme customization
-│   └── widgets/
-│       ├── sidebar.py         # Sidebar navigation & quick project switcher
-│       ├── stat_card.py       # Reusable metric card widget
-│       └── custom_controls.py # Path picker, buttons, & status badges
-│
-├── assets/
-│   ├── logo.png               # High-res FlowMate application icon
-│   └── icons/                 # UI icons
-│
-├── logs/                      # Application activity logs
-└── projects/                  # Saved project workspace configuration files
+├── assets/                    # Application Branding & Icons
+│   └── logo.png
+└── projects/                  # Saved Project JSON Workspace Files
 ```
 
 ---
 
-## 📄 License
+## 💡 How It Works (Workflow)
 
-This project is licensed under the [MIT License](LICENSE).
+```mermaid
+graph LR
+    A[Google Chrome / Web Browser] -->|Downloads File| B[Watch Directory]
+    B -->|Detects File Event| C[FlowMate WatcherThread]
+    C -->|Verifies Write Lock| D[Atomic File Renamer]
+    D -->|Renames 001.mp4| E[Target Output Folder]
+    D -->|Emits Qt Signal| F[Dashboard UI & System Tray]
+```
+
+1. **Download Initiation**: You click download on a video in Chrome.
+2. **Detection & Debouncing**: FlowMate's `DownloadEventHandler` detects file creation or move (`.crdownload` -> `.mp4`).
+3. **Lock Release Check**: FlowMate tests file stat size stabilization and OS write handles.
+4. **Renaming & Relocation**: FlowMate applies padding digits, moves the file to your project directory, and increments project stats.
+
+---
+
+## 📝 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+
+Crafted with ❤️ by **[Kanon Hosen](https://github.com/Kanon-Hosen)**
+
+*Star ⭐ this repository if FlowMate saved you time!*
+
+</div>
